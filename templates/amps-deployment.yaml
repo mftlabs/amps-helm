@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: amps
-        image: aram0112/amps-v2:latest
+        image: mftlabs/ampsv2:latest
         env:
         {{- range $key, $val := .Values.env }}
         - name: {{ $key }}
