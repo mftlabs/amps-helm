@@ -45,7 +45,6 @@ ports:
     protocol: TCP
     port: 15022
     targetPort: 15022
-
 nodeHost: docker-desktop
 tempMount: /data/amps/tmp
 tempSize: 20Gi
@@ -128,7 +127,9 @@ vault:
       type: "NodePort"
       nodePort: 31000
       externalTrafficPolicy: "Local"
-# opensearch: 
+opensearch: 
+  sysctl: 
+    enabled: true
 #   extraEnvs:
 #     - name: DISABLE_INSTALL_DEMO_CONFIG
 #       value: "true"
