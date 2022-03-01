@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amps
+  namespace: default
+  labels:
+    name: amps
+    instance: amps-cluster
+spec:
+  replicas: {{.Values.replicas}}
+  selector:
+    matchLabels:
+      name: amps
+      instance: amps-node
+  template:
+    metadata:
+      labels:
+        name: amps
+        instance: amps-node
+    spec:
+      containers:
+      - name: amps
+        image: aram0112/amps-v2:latest
+        env:
+        {{- range $key, $val := .Values.env }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+        {{- end }}
+        - name: RELEASE_NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: DATAPIO_SERVICE_NAME
+          value: amps-svc-headless
+        - name: DATAPIO_APP_NAME
+          value: amps
+        # - name: RELEASE_COOKIE
+        #   value: IDFRSSJFXFMWMBATZTZP
+        volumeMounts:
+        - name: amps-temp-pv-storage
+          mountPath: {{.Values.tempMount}}
+        - name: amps-modules-pv-storage
+          mountPath: {{.Values.moduleMount}}
+        ports:
+          - name: epmd
+            containerPort: 4369
+            protocol: TCP
+      initContainers:
+      - name: init-nats
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup amps-nats.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-nats; sleep 2; done"]
+      - name: init-vault
+        image: busybox:1.28
+        command: ['sh', '-c', "until nslookup amps-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-vault; sleep 2; done"]
+      - name: init-opensearch
+        image: curlimages/curl:latest
+        command: ["/bin/sh","-c"]
+        args: ["while [ $(curl -swk '%{http_code}' https://opensearch-cluster-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the webserver...'; done"]
+      volumes:
+      - name: amps-temp-pv-storage
+        persistentVolumeClaim:
+          claimName: amps-temp-pv-claim
+      - name: amps-modules-pv-storage
+        persistentVolumeClaim:
+          claimName: amps-modules-pv-claim
+      
+      #  ports:
+      #  - containerPort: 8080

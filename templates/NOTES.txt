@@ -1,0 +1,3 @@
+Access Admin Portal at http://{{.Values.env.AMPS_ADMIN_HOST}}:{{.Values.env.AMPS_PORT}}
+Access User Portal at http://{{.Values.env.AMPS_HOST}}:{{.Values.env.AMPS_PORT}}
+

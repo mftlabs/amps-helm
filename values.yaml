@@ -1,0 +1,158 @@
+# Default values for amps.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+imagePullSecrets: []
+nameOverride: "amps"
+fullnameOverride: "amps-chart"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "amps"
+
+secret:
+  name: app-env-var-secret
+env:
+  AMPS_AUTH_METHOD: db
+  AMPS_OPENSEARCH_ADDR: https://opensearch-cluster-master:9200
+  AMPS_VAULT_ADDR: http://amps-vault:8200
+  AMPS_NATS_HOST: amps-nats
+  AMPS_NATS_PORT: 4222
+  AMPS_HOST: localhost
+  AMPS_PORT: 4080
+  AMPS_SSL_PORT: 55443
+  AMPS_USE_SSL: FALSE
+  AMPS_ADMIN_HOST: admin.localhost
+  AMPS_SSL_KEY:
+  AMPS_SSL_CERT:
+  TZ: America/Chicago
+  SECRET_KEY_BASE: FZecDq8oIf+th6OcXfXYy5Y0cZi3QEsVIQsJ/qua2D0nrmE5qw/EDNtWN3j8KBBs
+  AMPS_OPENSEARCH_USERNAME: admin
+  AMPS_OPENSEARCH_PASSWORD: admin
+
+ports: 
+  - name: amps
+    port: 4080
+    targetPort: 4080
+  - name: sftp
+    protocol: TCP
+    port: 15022
+    targetPort: 15022
+
+nodeHost: docker-desktop
+tempMount: /data/amps/tmp
+tempSize: 20Gi
+moduleMount: /data/amps/modules
+moduleSize: 1Gi
+
+replicas: 1
+
+# podAnnotations: {}
+
+# podSecurityContext: {}
+#   # fsGroup: 2000
+
+# securityContext: {}
+#   # capabilities:
+#   #   drop:
+#   #   - ALL
+#   # readOnlyRootFilesystem: true
+#   # runAsNonRoot: true
+#   # runAsUser: 1000
+
+# ingress:
+#   enabled: true
+#   className: ""
+#   annotations: {}
+#     # kubernetes.io/ingress.class: nginx
+#     # kubernetes.io/tls-acme: "true"
+#   hosts:
+#     - host: chart-example.local
+#       paths:
+#         - path: /
+#           pathType: ImplementationSpecific
+#   tls: []
+#   #  - secretName: chart-example-tls
+#   #    hosts:
+#   #      - chart-example.local
+
+# resources: {}
+#   # We usually recommend not to specify default resources and to leave this as a conscious
+#   # choice for the user. This also increases chances charts run on environments with little
+#   # resources, such as Minikube. If you do want to specify resources, uncomment the following
+#   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+#   # limits:
+#   #   cpu: 100m
+#   #   memory: 128Mi
+#   # requests:
+#   #   cpu: 100m
+#   #   memory: 128Mi
+
+# autoscaling:
+#   enabled: false
+#   minReplicas: 1
+#   maxReplicas: 100
+#   targetCPUUtilizationPercentage: 80
+#   # targetMemoryUtilizationPercentage: 80
+
+# nodeSelector: {}
+
+# tolerations: []
+
+# affinity: {}
+
+nats:
+  nats:
+    jetstream:
+      enabled: true
+      fileStorage:
+        enabled: true
+vault: 
+  global: 
+    tlsDisable: true
+  server:
+    dataStorage:
+      enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        - host: localhost
+    service: 
+      type: "NodePort"
+      nodePort: 31000
+      externalTrafficPolicy: "Local"
+# opensearch: 
+#   extraEnvs:
+#     - name: DISABLE_INSTALL_DEMO_CONFIG
+#       value: "true"
+#   replicas: 3
+  # podSecurityContext: 
+  #   runAsGroup: 0777
+  #   runAsUser: 0777
+  # #   fsGroup: 0777
+  # securityContext:
+  #   runAsNonRoot: false
+    # runAsUser: 0777
+  # defaultMode: 0660
+  # persistence.enableInitChown: false
+
+
+# opensearch-dashboards:
+#   extraEnvs:
+#     - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
+#       value: "true"
+#   opensearchHosts: "http://opensearch-cluster-master:9200"
+#   service: 
+#     type: ClusterIP
+#     port: 5601
+#     targetPort: 35601
+
+
+

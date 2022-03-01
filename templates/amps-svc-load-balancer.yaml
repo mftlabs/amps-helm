@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: amps-svc-ui
+  namespace: default
+  labels:
+    name: amps
+    instance: amps-svc-load-balancer
+spec:
+  type: LoadBalancer
+  ports: 
+{{ toYaml .Values.ports| indent 4 }}
+  selector:
+    name: amps
+    instance: amps-node
+

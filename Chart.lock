@@ -1,0 +1,15 @@
+dependencies:
+- name: nats
+  repository: https://nats-io.github.io/k8s/helm/charts/
+  version: 0.13.1
+- name: vault
+  repository: https://helm.releases.hashicorp.com
+  version: 0.19.0
+- name: opensearch
+  repository: https://opensearch-project.github.io/helm-charts/
+  version: 1.8.0
+- name: opensearch-dashboards
+  repository: https://opensearch-project.github.io/helm-charts/
+  version: 1.2.1
+digest: sha256:3d0301a649eecabb6fa1f9538a7124aaba2894e80a914bed4b63f6cf5872772c
+generated: "2022-02-28T19:29:26.8689866-06:00"
