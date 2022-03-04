@@ -30,6 +30,14 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        - name: AMPS_OPENSEARCH_ADDR
+          value: https://opensearch-cluster-master:9200
+        - name: AMPS_VAULT_ADDR
+          value: http://{{.Release.Name}}-vault:8200
+        - name: AMPS_NATS_HOST
+          value: {{.Release.Name}}-nats
+        - name: AMPS_NATS_PORT
+          value: "4222"
         - name: DATAPIO_SERVICE_NAME
           value: amps-svc-headless
         - name: DATAPIO_APP_NAME
@@ -48,10 +56,10 @@ spec:
       initContainers:
       - name: init-nats
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup amps-nats.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-nats; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup {{.Release.Name}}-nats.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-nats; sleep 2; done"]
       - name: init-vault
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup amps-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-vault; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup {{.Release.Name}}-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-vault; sleep 2; done"]
       - name: init-opensearch
         image: curlimages/curl:latest
         command: ["/bin/sh","-c"]

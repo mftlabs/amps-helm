@@ -21,10 +21,6 @@ secret:
   name: app-env-var-secret
 env:
   AMPS_AUTH_METHOD: db
-  AMPS_OPENSEARCH_ADDR: https://opensearch-cluster-master:9200
-  AMPS_VAULT_ADDR: http://amps-vault:8200
-  AMPS_NATS_HOST: amps-nats
-  AMPS_NATS_PORT: 4222
   AMPS_HOST: localhost
   AMPS_PORT: 4080
   AMPS_SSL_PORT: 55443
