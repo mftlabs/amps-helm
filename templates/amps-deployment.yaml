@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: amps
   namespace: default
@@ -8,6 +8,7 @@ metadata:
     instance: amps-cluster
 spec:
   replicas: {{.Values.replicas}}
+  serviceName: amps-svc-headless
   selector:
     matchLabels:
       name: amps
