@@ -12,11 +12,11 @@ spec:
   storageClassName: modules
   hostPath: 
     path: /amps/data/modules
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - {{.Values.nodeHost}}
+  # nodeAffinity:
+  #   required:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: kubernetes.io/hostname
+  #         operator: In
+  #         values:
+  #         - {{.Values.nodeHost}}
