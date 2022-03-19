@@ -41,11 +41,13 @@ ports:
     protocol: TCP
     port: 15022
     targetPort: 15022
-# nodeHost: docker-desktop
+nodeHost: docker-desktop
 tempMount: /data/amps/tmp
+tempPath: /Users/abhayram/amps/tmp
 tempSize: 20Gi
 moduleMount: /data/amps/modules
 moduleSize: 1Gi
+modulePath: /Users/abhayram/amps/modules
 
 replicas: 1
 

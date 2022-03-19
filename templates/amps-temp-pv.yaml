@@ -10,13 +10,13 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
-  hostPath: 
-    path: /amps/data/tmp
-  # nodeAffinity:
-  #   required:
-  #     nodeSelectorTerms:
-  #     - matchExpressions:
-  #       - key: kubernetes.io/hostname
-  #         operator: In
-  #         values:
-  #         - {{.Values.nodeHost}}
+  local:
+    path: {{.Values.tempPath}}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - {{.Values.nodeHost}}
