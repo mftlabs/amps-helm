@@ -43,11 +43,11 @@ ports:
     targetPort: 15022
 nodeHost: docker-desktop
 tempMount: /data/amps/tmp
-tempPath: /Users/abhayram/amps/tmp
+tempPath: /c/tools/amps/tmp
 tempSize: 20Gi
 moduleMount: /data/amps/modules
 moduleSize: 1Gi
-modulePath: /Users/abhayram/amps/modules
+modulePath: /c/tools/amps/modules
 
 replicas: 1
 

@@ -10,13 +10,14 @@ spec:
   - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: modules
-  local:
-    path: {{.Values.modulePath}}
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - {{.Values.nodeHost}}
+  hostPath:
+    path: /run/desktop/mnt/host{{.Values.tempPath}}
+    type: DirectoryOrCreate
+  # nodeAffinity:
+  #   required:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: kubernetes.io/hostname
+  #         operator: In
+  #         values:
+  #         - {{.Values.nodeHost}}
