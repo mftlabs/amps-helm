@@ -9,7 +9,9 @@ To retrieve Root Password: kubectl get secret --namespace default {{.Release.Nam
 
 Ignore any trailing "%" signs.
 
-After retrieving your credentials, you can create an Provider with type "Archive" to use this instance. Use the following values in the provier:
+After retrieving your credentials, you can create an Provider with type "Archive" to use this instance. 
+Navigate to the System Configuration page, enable Archiving, and press the + button to create a new provider.
+Use the following values in the provier:
 - Archive Type: S3 | S3 Service: MinIO | Scheme: HTTP | Host: {{.Release.Name}}-minio | Port: 9000 | Bucket: archive
 Additionally supply your root username and password for the Access Key and Secret Key
 
