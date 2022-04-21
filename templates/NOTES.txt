@@ -1,3 +1,21 @@
-Access Admin Portal at http://{{.Values.env.AMPS_ADMIN_HOST}}:{{.Values.env.AMPS_PORT}}
-Access User Portal at http://{{.Values.env.AMPS_HOST}}:{{.Values.env.AMPS_PORT}}
+Admin Portal served by LoadBalancer at http://{{.Values.env.AMPS_ADMIN_HOST}}:{{.Values.env.AMPS_PORT}}
+User Portal served by LoadBalancer at http://{{.Values.env.AMPS_HOST}}:{{.Values.env.AMPS_PORT}}
+{{ if .Values.archiving.enabled }}
+Archiving is enabled and a MinIO cluster has been automatically started.
+A bucket named "archive" has also been created for use with archiving.
+To retrieve your Root Username and Password, run the following commands to retrieve them from the Kubernetes Secret.
+To retrieve Root User: kubectl get secret --namespace default {{.Release.Name}}-minio -o jsonpath="{.data.root-user}" | base64 --decode
+To retrieve Root Password: kubectl get secret --namespace default {{.Release.Name}}-minio -o jsonpath="{.data.root-password}" | base64 --decode
+
+Ignore any trailing "%" signs.
+
+After retrieving your credentials, you can create an Provider with type "Archive" to use this instance. Use the following values in the provier:
+- Archive Type: S3 | S3 Service: MinIO | Scheme: HTTP | Host: {{.Release.Name}}-minio | Port: 9000 | Bucket: archive
+Additionally supply your root username and password for the Access Key and Secret Key
+
+If you would like to access the MinIO UI, run the following command: 
+kubectl port-forward svc/{{.Release.Name}}-minio 9001:9001         
+
+
+{{ end }}
 

@@ -11,5 +11,8 @@ dependencies:
 - name: opensearch-dashboards
   repository: https://opensearch-project.github.io/helm-charts/
   version: 1.2.1
-digest: sha256:3d0301a649eecabb6fa1f9538a7124aaba2894e80a914bed4b63f6cf5872772c
-generated: "2022-02-28T19:29:26.8689866-06:00"
+- name: minio
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.2.13
+digest: sha256:e6eae0aa6aaeb64a28922a44d1bb9b62c9042392e6d3ac7c16d40c4849899588
+generated: "2022-04-20T17:13:47.267003-05:00"
