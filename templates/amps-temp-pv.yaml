@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
-    path: /run/desktop/mnt/host{{.Values.tempPath}}
+    path: {{.Values.tempPath}}
     type: DirectoryOrCreate
   # nodeAffinity:
   #   required:

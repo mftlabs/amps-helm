@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: modules
   hostPath:
-    path: /run/desktop/mnt/host{{.Values.modulePath}}
+    path: {{.Values.modulePath}}
     type: DirectoryOrCreate
   # nodeAffinity:
   #   required:
