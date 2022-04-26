@@ -2,7 +2,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: amps-svc-ui
-  namespace: default
   labels:
     name: amps
     instance: amps-svc-load-balancer
