@@ -127,6 +127,9 @@ vault:
         - host: localhost
 minio:
   defaultBuckets: "archive"
+mongodb:
+  auth:
+    enabled: false
 
 # opensearch: 
 #   extraEnvs:
