@@ -34,6 +34,8 @@ spec:
           value: https://opensearch-cluster-master:9200
         - name: AMPS_VAULT_ADDR
           value: http://{{.Release.Name}}-vault:8200
+        - name: AMPS_MONGO_ADDR
+          value: mongodb://{{.Release.Name}}-mongodb:27017/amps
         - name: AMPS_NATS_HOST
           value: {{.Release.Name}}-nats
         - name: AMPS_NATS_PORT
@@ -60,10 +62,14 @@ spec:
       - name: init-vault
         image: busybox:1.28
         command: ['sh', '-c', "until nslookup {{.Release.Name}}-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-vault; sleep 2; done"]
-      - name: init-opensearch
+      - name: init-db
         image: curlimages/curl:latest
         command: ["/bin/sh","-c"]
+        {{ if eq .Values.env.AMPS_DB_PROVIDER "os" }}
         args: ["while [ $(curl -swk '%{http_code}' https://opensearch-cluster-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the webserver...'; done"]
+        {{else}}
+        command: ['sh', '-c', "until nslookup {{.Release.Name}}-mongodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-mongodb; sleep 2; done"]
+        {{end}}
       volumes:
       - name: amps-temp-pv-storage
         persistentVolumeClaim:

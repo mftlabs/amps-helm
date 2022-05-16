@@ -32,6 +32,7 @@ env:
   SECRET_KEY_BASE: FZecDq8oIf+th6OcXfXYy5Y0cZi3QEsVIQsJ/qua2D0nrmE5qw/EDNtWN3j8KBBs
   AMPS_OPENSEARCH_USERNAME: admin
   AMPS_OPENSEARCH_PASSWORD: admin
+  AMPS_DB_PROVIDER: mongo
 
 ports: 
   - name: amps
@@ -43,11 +44,11 @@ ports:
     targetPort: 15022
 nodeHost: docker-desktop
 tempMount: /data/amps/tmp
-tempPath: /c/tools/amps/tmp
+tempPath: /data/amps/tmp
 tempSize: 20Gi
 moduleMount: /data/amps/modules
 moduleSize: 1Gi
-modulePath: /c/tools/amps/modules
+modulePath: /data/amps/modules
 
 replicas: 1
 
