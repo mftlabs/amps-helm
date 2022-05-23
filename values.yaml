@@ -113,18 +113,18 @@ nats:
   nats:
     jetstream:
       enabled: true
-      fileStorage:
-        enabled: true
+      # fileStorage:
+      #   enabled: true
 vault: 
   global: 
     tlsDisable: true
   server:
-    dataStorage:
-      enabled: true
-    ingress:
-      enabled: true
-      hosts:
-        - host: localhost
+    # dataStorage:
+    #   enabled: true
+    # ingress:
+    #   enabled: true
+    #   hosts:
+    #     - host: localhost
 minio:
   defaultBuckets: "archive"
 mongodb:
