@@ -46,11 +46,11 @@ spec:
           value: amps
         # - name: RELEASE_COOKIE
         #   value: IDFRSSJFXFMWMBATZTZP
-        volumeMounts:
-        - name: amps-temp-pv-storage
-          mountPath: {{.Values.tempMount}}
-        - name: amps-modules-pv-storage
-          mountPath: {{.Values.moduleMount}}
+        # volumeMounts:
+        # - name: amps-temp-pv-storage
+        #   mountPath: {{.Values.tempMount}}
+        # - name: amps-modules-pv-storage
+        #   mountPath: {{.Values.moduleMount}}
         ports:
           - name: epmd
             containerPort: 4369
@@ -70,13 +70,13 @@ spec:
         {{else}}
         command: ['sh', '-c', "until nslookup {{.Release.Name}}-mongodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-mongodb; sleep 2; done"]
         {{end}}
-      volumes:
-      - name: amps-temp-pv-storage
-        persistentVolumeClaim:
-          claimName: amps-temp-pv-claim
-      - name: amps-modules-pv-storage
-        persistentVolumeClaim:
-          claimName: amps-modules-pv-claim
+      # volumes:
+      # - name: amps-temp-pv-storage
+      #   persistentVolumeClaim:
+      #     claimName: amps-temp-pv-claim
+      # - name: amps-modules-pv-storage
+      #   persistentVolumeClaim:
+      #     claimName: amps-modules-pv-claim
       
       #  ports:
       #  - containerPort: 8080
