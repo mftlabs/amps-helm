@@ -1,0 +1,40 @@
+nats:
+  jetstream:
+    enabled: true
+    fileStorage:
+      enabled: false
+
+
+# mongo
+auth:
+  enabled: false
+arbiter:
+  enabled: false
+persistence:
+  enabled: false
+volumePermissions:
+  securityContext:
+    runAsUser: "auto"
+podSecurityContext:
+  enabled: false
+containerSecurityContext:
+  enabled: false
+shmVolume:
+  chmod:
+    enable: false
+	
+# vault
+
+global: 
+  tlsDisable: true
+  openshift: true
+  imagePullSecrets:
+    - name: docker
+injector:
+  enabled: false
+server:
+  dataStorage:
+    enabled: true
+    storageClass: nas
+  authDelegator: 
+    enabled: false

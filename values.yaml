@@ -113,23 +113,21 @@ nats:
   nats:
     jetstream:
       enabled: true
-      # fileStorage:
-      #   enabled: true
+      fileStorage:
+        enabled: false
 vault: 
   global: 
     tlsDisable: true
+    openshift: true
+  injector:
+    enabled: false
   server:
-    # dataStorage:
-    #   enabled: true
-    # ingress:
-    #   enabled: true
-    #   hosts:
-    #     - host: localhost
+    dataStorage:
+      enabled: false
+    authDelegator: 
+      enabled: false
 minio:
   defaultBuckets: "archive"
-mongodb:
-  auth:
-    enabled: false
 
 # opensearch: 
 #   extraEnvs:

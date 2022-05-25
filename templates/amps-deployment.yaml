@@ -1,26 +1,27 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: amps
+  name: {{.Release.Name}}
   labels:
-    name: amps
-    instance: amps-cluster
+    name: {{.Release.Name}}
+    instance: {{.Release.Name}}-cluster
 spec:
   replicas: {{.Values.replicas}}
-  serviceName: amps-svc-headless
+  serviceName: {{.Release.Name}}-svc-headless
   selector:
     matchLabels:
-      name: amps
-      instance: amps-node
+      name: {{.Release.Name}}
+      instance: {{.Release.Name}}-node
   template:
     metadata:
       labels:
-        name: amps
-        instance: amps-node
+        name: {{.Release.Name}}
+        instance: {{.Release.Name}}-node
     spec:
       containers:
-      - name: amps
-        image: mftlabs/ampsv2:latest
+      - name: {{.Release.Name}}
+        image: ampsv2:latest
+        imagePullPolicy: IfNotPresent
         env:
         {{- range $key, $val := .Values.env }}
         - name: {{ $key }}
@@ -35,21 +36,21 @@ spec:
         - name: AMPS_VAULT_ADDR
           value: http://{{.Release.Name}}-vault:8200
         - name: AMPS_MONGO_ADDR
-          value: mongodb://{{.Release.Name}}-mongodb:27017/amps
+          value: mongodb://{{.Release.Name}}-mongo:27017/{{.Release.Name}}
         - name: AMPS_NATS_HOST
           value: {{.Release.Name}}-nats
         - name: AMPS_NATS_PORT
           value: "4222"
         - name: DATAPIO_SERVICE_NAME
-          value: amps-svc-headless
+          value: {{.Release.Name}}-svc-headless
         - name: DATAPIO_APP_NAME
-          value: amps
+          value: {{.Release.Name}}
         # - name: RELEASE_COOKIE
         #   value: IDFRSSJFXFMWMBATZTZP
         # volumeMounts:
-        # - name: amps-temp-pv-storage
+        # - name: {{.Release.Name}}-temp-pv-storage
         #   mountPath: {{.Values.tempMount}}
-        # - name: amps-modules-pv-storage
+        # - name: {{.Release.Name}}-modules-pv-storage
         #   mountPath: {{.Values.moduleMount}}
         ports:
           - name: epmd
@@ -58,25 +59,20 @@ spec:
       initContainers:
       - name: init-nats
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup {{.Release.Name}}-nats.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-nats; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup {{.Release.Name}}-nats.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-nats; sleep 2; done"]
       - name: init-vault
         image: busybox:1.28
-        command: ['sh', '-c', "until nslookup {{.Release.Name}}-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-vault; sleep 2; done"]
+        command: ['sh', '-c', "until nslookup {{.Release.Name}}-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-vault; sleep 2; done"]
       - name: init-db
         image: curlimages/curl:latest
-        command: ["/bin/sh","-c"]
-        {{ if eq .Values.env.AMPS_DB_PROVIDER "os" }}
-        args: ["while [ $(curl -swk '%{http_code}' https://opensearch-cluster-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the webserver...'; done"]
-        {{else}}
-        command: ['sh', '-c', "until nslookup {{.Release.Name}}-mongodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for amps-mongodb; sleep 2; done"]
-        {{end}}
+        command: ['sh', '-c', "until nslookup {{.Release.Name}}-mongo.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-mongodb; sleep 2; done"]
       # volumes:
-      # - name: amps-temp-pv-storage
+      # - name: {{.Release.Name}}-temp-pv-storage
       #   persistentVolumeClaim:
-      #     claimName: amps-temp-pv-claim
-      # - name: amps-modules-pv-storage
+      #     claimName: {{.Release.Name}}-temp-pv-claim
+      # - name: {{.Release.Name}}-modules-pv-storage
       #   persistentVolumeClaim:
-      #     claimName: amps-modules-pv-claim
+      #     claimName: {{.Release.Name}}-modules-pv-claim
       
       #  ports:
       #  - containerPort: 8080
