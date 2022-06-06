@@ -20,8 +20,7 @@ spec:
     spec:
       containers:
       - name: {{.Release.Name}}
-        image: ampsv2:latest
-        imagePullPolicy: IfNotPresent
+        image: mftlabs/ampsv2:latest
         env:
         {{- range $key, $val := .Values.env }}
         - name: {{ $key }}
