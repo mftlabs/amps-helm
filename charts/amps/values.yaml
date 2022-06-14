@@ -45,20 +45,22 @@ ports:
 
 modules:
   size: 1Gi
-  storageClassName: 
+  # storageClassName:
 
 cfg:
   size: 1Gi
-  storageClassName: 
+  # storageClassName:
 
 misc:
   size: 1Gi
-  storageClassName: 
+  # storageClassName: 
 
 db:
   default: true
   size: 20Gi
-  storageClassName: 
+  # storageClassName:
+
+defaultStorageClass:
 
 replicas: 1
 

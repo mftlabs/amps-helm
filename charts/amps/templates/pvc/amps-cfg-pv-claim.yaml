@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{.Release.Name}}-cfg-pvc
 spec:
-  storageClassName: {{.Values.cfg.storageClassName}}
+  storageClassName: {{ default .Values.defaultStorageClass .Values.cfg.storageClassName}}
   accessModes:
     - ReadWriteOnce
   resources:
