@@ -30,15 +30,10 @@ dependencies:
   - name: vault
     version: 0.19.0
     repository: "https://helm.releases.hashicorp.com"
-  # - name: opensearch
-  #   version: 1.8.0
-  #   repository: "https://opensearch-project.github.io/helm-charts/"
-  # - name: opensearch-dashboards
-  #   version: 1.2.1
-  #   repository: "https://opensearch-project.github.io/helm-charts/"
   - name: mongodb
     version: 12.1.5
     repository: https://charts.bitnami.com/bitnami
+    condition: db.default
   - name: minio
     version: 11.2.13
     repository: https://charts.bitnami.com/bitnami

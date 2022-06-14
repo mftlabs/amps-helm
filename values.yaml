@@ -17,43 +17,61 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: "amps"
 
-secret:
-  name: app-env-var-secret
-env:
-  AMPS_AUTH_METHOD: db
-  AMPS_HOST: localhost
-  AMPS_PORT: 4080
-  AMPS_SSL_PORT: 55443
-  AMPS_USE_SSL: FALSE
-  AMPS_ADMIN_HOST: admin.localhost
-  AMPS_SSL_KEY:
-  AMPS_SSL_CERT:
-  TZ: America/Chicago
-  SECRET_KEY_BASE: FZecDq8oIf+th6OcXfXYy5Y0cZi3QEsVIQsJ/qua2D0nrmE5qw/EDNtWN3j8KBBs
-  AMPS_OPENSEARCH_USERNAME: admin
-  AMPS_OPENSEARCH_PASSWORD: admin
-  AMPS_DB_PROVIDER: mongo
+timezone: America/Chicago
+
+ui:
+  admin_host: admin.abhayram.io
+  user_host: user.abhayram.io
+  http_port: 80
+  ssl:
+    enabled: true
+    port: 443
+    key: 
+    cert: 
+    gen_certs: true
+    domains: mftlabs.abhayram.io,test.abhayram.io
+    emails: "abhaykram12@gmail.com"
+    certmode: production
 
 ports: 
-  - name: amps
-    port: 4080
-    targetPort: 4080
   - name: sftp
     protocol: TCP
     port: 15022
     targetPort: 15022
-nodeHost: docker-desktop
-tempMount: /data/amps/tmp
-tempPath: /data/amps/tmp
-tempSize: 20Gi
-moduleMount: /data/amps/modules
-moduleSize: 1Gi
-modulePath: /data/amps/modules
+  - name: api
+    protocol: TCP
+    port: 1234
+    targetPort: 1234
+  - name: api2
+    protocol: TCP
+    port: 1235
+    targetPort: 1235
+
+modules:
+  size: 1Gi
+  storageClassName: gp2
+
+cfg:
+  size: 1Gi
+  storageClassName: gp2
+
+misc:
+  size: 1Gi
+  storageClassName: gp2
+
+db:
+  default: true
+  size: 20Gi
+  storageClassName: gp2
 
 replicas: 1
 
 archiving:
   enabled: false
+
+
+ 
+existingSecret: 
 
 # podAnnotations: {}
 
@@ -113,49 +131,40 @@ nats:
   nats:
     jetstream:
       enabled: true
-      # fileStorage:
-      #   enabled: true
+      fileStorage:
+        enabled: true
 vault: 
   global: 
     tlsDisable: true
+    openshift: true
+  injector:
+    enabled: false
   server:
-    # dataStorage:
-    #   enabled: true
-    # ingress:
-    #   enabled: true
-    #   hosts:
-    #     - host: localhost
+    dataStorage:
+      enabled: true
+      mountPath: "/amps/vault/data"
+
+    authDelegator: 
+      enabled: false
 minio:
   defaultBuckets: "archive"
-mongodb:
+
+mongodb: 
   auth:
     enabled: false
-
-# opensearch: 
-#   extraEnvs:
-#     - name: DISABLE_INSTALL_DEMO_CONFIG
-#       value: "true"
-#   replicas: 3
-  # podSecurityContext: 
-  #   runAsGroup: 0777
-  #   runAsUser: 0777
-  # #   fsGroup: 0777
-  # securityContext:
-  #   runAsNonRoot: false
-    # runAsUser: 0777
-  # defaultMode: 0660
-  # persistence.enableInitChown: false
-
-
-# opensearch-dashboards:
-#   extraEnvs:
-#     - name: DISABLE_SECURITY_DASHBOARDS_PLUGIN
-#       value: "true"
-#   opensearchHosts: "http://opensearch-cluster-master:9200"
-#   service: 
-#     type: ClusterIP
-#     port: 5601
-#     targetPort: 35601
+  persistence:
+    enabled: true
+  volumePermissions:
+    enabled: true
+    securityContext:
+      runAsUser: "auto"
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+  shmVolume:
+    chmod:
+      enable: false
 
 
 
