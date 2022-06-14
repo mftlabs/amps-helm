@@ -1,5 +1,14 @@
-Admin Portal served by LoadBalancer at http://{{.Values.env.AMPS_ADMIN_HOST}}:{{.Values.env.AMPS_PORT}}
-User Portal served by LoadBalancer at http://{{.Values.env.AMPS_HOST}}:{{.Values.env.AMPS_PORT}}
+
+{{ if .Values.ui.ssl.enabled }}
+Admin Portal served by LoadBalancer at https://{{.Values.ui.admin_host}}:{{.Values.ui.ssl.port}}
+User Portal served by LoadBalancer at https://{{.Values.ui.user_host}}:{{.Values.ui.ssl.port}}
+
+{{ else }}
+Admin Portal served by LoadBalancer at http://{{.Values.ui.admin_host}}:{{.Values.ui.http_port}}
+User Portal served by LoadBalancer at http://{{.Values.ui.user_host}}:{{.Values.ui.http_port}}
+{{ end }}
+
+
 {{ if .Values.archiving.enabled }}
 Archiving is enabled and a MinIO cluster has been automatically started.
 A bucket named "archive" has also been created for use with archiving.

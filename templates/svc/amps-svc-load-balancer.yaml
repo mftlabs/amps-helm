@@ -8,6 +8,12 @@ metadata:
 spec:
   type: LoadBalancer
   ports: 
+    - name: amps
+      port: {{ .Values.ui.http_port }}
+      targetPort: {{ .Values.ui.http_port }}
+    - name: amps-ssl
+      port: {{ .Values.ui.ssl.port }}
+      targetPort: {{ .Values.ui.ssl.port }}
 {{ toYaml .Values.ports| indent 4 }}
   selector:
     name: {{.Release.Name}}
