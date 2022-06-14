@@ -20,8 +20,8 @@ serviceAccount:
 timezone: America/Chicago
 
 ui:
-  admin_host: admin.abhayram.io
-  user_host: user.abhayram.io
+  admin_host: admin.localhost
+  user_host: localhost
   http_port: 80
   ssl:
     enabled: true
@@ -29,9 +29,9 @@ ui:
     key: 
     cert: 
     gen_certs: true
-    domains: mftlabs.abhayram.io,test.abhayram.io
-    emails: "abhaykram12@gmail.com"
-    certmode: production
+    domains: 
+    emails: "info@agiledatainc.com"
+    certmode: local
 
 ports: 
   - name: sftp
@@ -42,27 +42,23 @@ ports:
     protocol: TCP
     port: 1234
     targetPort: 1234
-  - name: api2
-    protocol: TCP
-    port: 1235
-    targetPort: 1235
 
 modules:
   size: 1Gi
-  storageClassName: gp2
+  storageClassName: 
 
 cfg:
   size: 1Gi
-  storageClassName: gp2
+  storageClassName: 
 
 misc:
   size: 1Gi
-  storageClassName: gp2
+  storageClassName: 
 
 db:
   default: true
   size: 20Gi
-  storageClassName: gp2
+  storageClassName: 
 
 replicas: 1
 
