@@ -24,11 +24,11 @@ ui:
   user_host: localhost
   http_port: 80
   ssl:
-    enabled: true
+    enabled: false
     port: 443
     key: 
     cert: 
-    gen_certs: true
+    gen_certs: false
     domains: 
     emails: "info@agiledatainc.com"
     certmode: local
