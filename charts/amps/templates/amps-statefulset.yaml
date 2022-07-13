@@ -76,6 +76,15 @@ spec:
               name: amps-secret
               key: keybase
               optional: false
+        readinessProbe:
+          periodSeconds: 30
+          httpGet:
+            port: {{ .Values.ui.http_port}}
+            httpHeaders:
+            - name: Host
+              value:  {{ .Values.ui.admin_host}}
+
+        
         volumeMounts:
         # - name: {{.Release.Name}}-temp-pv-storage
         #   mountPath: {{.Values.tempMount}}
