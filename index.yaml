@@ -3,6 +3,31 @@ entries:
   amps:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2022-07-22T10:31:28.921811404Z"
+    dependencies:
+    - name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.13.1
+    - name: vault
+      repository: https://helm.releases.hashicorp.com
+      version: 0.19.0
+    - condition: db.default
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.5
+    - condition: archiving.enabled
+      name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.2.13
+    description: A Helm chart for Kubernetes
+    digest: 0fd6cddd3ccf64fd723727628555a4d4ce61afad993b919e044fa301fd298036
+    name: amps
+    type: application
+    urls:
+    - https://github.com/mftlabs/helm/releases/download/amps-0.1.9/amps-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2022-07-14T00:42:22.278687964Z"
     dependencies:
     - name: nats
@@ -176,4 +201,4 @@ entries:
     urls:
     - https://github.com/mftlabs/amps-helm/releases/download/amps-0.1.2/amps-0.1.2.tgz
     version: 0.1.2
-generated: "2022-07-14T00:42:22.278896267Z"
+generated: "2022-07-22T10:31:28.922036306Z"
