@@ -25,6 +25,7 @@ ui:
   http_port: 80
   ssl:
     enabled: false
+    force: false
     port: 443
     key: 
     cert: 

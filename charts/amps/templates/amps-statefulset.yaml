@@ -32,6 +32,8 @@ spec:
           value: {{ quote .Values.ui.ssl.port}}
         - name: AMPS_USE_SSL
           value: {{ quote .Values.ui.ssl.enabled}}
+        - name: AMPS_FORCE_SSL
+          value: {{ quote .Values.ui.ssl.force}}
         - name: AMPS_GEN_CERTS
           value: {{ quote .Values.ui.ssl.gen_certs}}
         - name: AMPS_EXTRA_DOMAINS
