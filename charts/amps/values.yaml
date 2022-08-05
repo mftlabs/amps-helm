@@ -132,19 +132,19 @@ nats:
       enabled: true
       fileStorage:
         enabled: true
-vault: 
-  global: 
-    tlsDisable: true
-    openshift: true
-  injector:
-    enabled: false
-  server:
-    dataStorage:
-      enabled: true
-      mountPath: "/amps/vault/data"
+# vault: 
+#   global: 
+#     tlsDisable: true
+#     openshift: true
+#   injector:
+#     enabled: false
+#   server:
+#     dataStorage:
+#       enabled: true
+#       mountPath: "/amps/vault/data"
 
-    authDelegator: 
-      enabled: false
+#     authDelegator: 
+#       enabled: false
 minio:
   defaultBuckets: "archive"
 
