@@ -78,6 +78,15 @@ spec:
               name: amps-secret
               key: keybase
               optional: false
+      {{ if .Values.ui.ssl.enabled }}
+        readinessProbe:
+          periodSeconds: 30
+          httpGet:
+            port: {{ .Values.ui.ssl.port}}
+            httpHeaders:
+            - name: Host
+              value:  {{ .Values.ui.admin_host}}
+      {{ else }}
         readinessProbe:
           periodSeconds: 30
           httpGet:
@@ -85,8 +94,7 @@ spec:
             httpHeaders:
             - name: Host
               value:  {{ .Values.ui.admin_host}}
-
-        
+      {{ end }}
         volumeMounts:
         # - name: {{.Release.Name}}-temp-pv-storage
         #   mountPath: {{.Values.tempMount}}
@@ -110,9 +118,9 @@ spec:
       - name: init-nats
         image: busybox:1.28
         command: ['sh', '-c', "until nslookup {{.Release.Name}}-nats.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-nats; sleep 2; done"]
-      - name: init-vault
-        image: busybox:1.28
-        command: ['sh', '-c', "until nslookup {{.Release.Name}}-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-vault; sleep 2; done"]
+      # - name: init-vault
+      #   image: busybox:1.28
+      #   command: ['sh', '-c', "until nslookup {{.Release.Name}}-vault.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-vault; sleep 2; done"]
       - name: init-db
         image: curlimages/curl:latest
         command: ['sh', '-c', "until nslookup {{.Release.Name}}-mongodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-mongodb; sleep 2; done"]
