@@ -78,7 +78,7 @@ spec:
               name: amps-secret
               key: keybase
               optional: false
-      {{ if .Values.ui.ssl.enabled }}
+      {{ if .Values.ui.ssl.force }}
         readinessProbe:
           periodSeconds: 30
           httpGet:
