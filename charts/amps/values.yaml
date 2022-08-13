@@ -140,6 +140,11 @@ mongodb:
     enabled: false
   persistence:
     enabled: true
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+
   volumePermissions:
     enabled: true
     securityContext:
