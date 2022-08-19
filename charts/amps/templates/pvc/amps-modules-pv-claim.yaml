@@ -3,7 +3,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{.Release.Name}}-modules-pvc
 spec:
-  storageClassName: {{ default .Values.defaultStorageClass .Values.modules.storageClassName}}
+  {{ if .Values.modules.storageClassName }}
+  storageClassName: {{ .Values.modules.storageClassName}}
+  {{ else if .Values.defaultStorageClass }}
+  storageClassName: {{ .Values.defaultStorageClass }}
+  {{ end }}
   accessModes:
     - ReadWriteOnce
   resources:
