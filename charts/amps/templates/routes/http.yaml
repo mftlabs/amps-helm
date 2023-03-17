@@ -1,0 +1,13 @@
+{{ if .Values.openshift }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{.Release.Name}}-http-route
+spec:
+  host: admin-amps.<Ingress_Domain>
+  port:
+    targetPort: {{ .Values.ui.http_port }}
+  to:
+    kind: Service
+    name: {{.Release.Name}}-ui-lb
+{{end}}

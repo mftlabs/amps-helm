@@ -66,7 +66,7 @@ temp:
   size: 20Gi
   # storageClassName:
 
-
+openshift: false
 
 defaultStorageClass:
 
