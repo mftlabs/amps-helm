@@ -9,7 +9,7 @@ spec:
   storageClassName: {{ .Values.defaultStorageClass }}
   {{ end }}
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: {{.Values.modules.size}}

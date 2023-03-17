@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Release.Name}}-modules-pvc
+  name: {{.Release.Name}}-temp-pvc
 spec:
-  {{ if .Values.modules.storageClassName }}
-  storageClassName: {{ .Values.modules.storageClassName}}
+  {{ if .Values.temp.storageClassName }}
+  storageClassName: {{ .Values.temp.storageClassName}}
   {{ else if .Values.defaultStorageClass }}
   storageClassName: {{ .Values.defaultStorageClass }}
   {{ end }}
@@ -12,4 +12,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{.Values.modules.size}}
+      storage: {{.Values.temp.size}}

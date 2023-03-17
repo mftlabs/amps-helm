@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{.Release.Name}}-modules-pvc
+  name: {{.Release.Name}}-cfg-pvc
 spec:
-  {{ if .Values.modules.storageClassName }}
-  storageClassName: {{ .Values.modules.storageClassName}}
+  {{ if .Values.cfg.storageClassName }}
+  storageClassName: {{ .Values.cfg.storageClassName}}
   {{ else if .Values.defaultStorageClass }}
   storageClassName: {{ .Values.defaultStorageClass }}
   {{ end }}
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: {{.Values.modules.size}}
+      storage: {{.Values.cfg.size}}

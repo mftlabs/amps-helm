@@ -57,25 +57,16 @@ misc:
   # storageClassName: 
 
 db:
-  default: false
+  default: true
   size: 20Gi
   # storageClassName:
-
-temp:
-  default: false
-  size: 20Gi
-  # storageClassName:
-
-
 
 defaultStorageClass:
 
-replicas:
-  backend: 3
-  ui: 2
+replicas: 1
 
 archiving:
-  enabled: true
+  enabled: false
 
 
  

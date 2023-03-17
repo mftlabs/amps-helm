@@ -1,19 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{.Release.Name}}-svc-ui
+  name: {{.Release.Name}}-svc-lb
   labels:
-    name: {{.Release.Name}}
+    name: {{.Release.Name}}-svc
     instance: {{.Release.Name}}-svc-load-balancer
 spec:
   type: LoadBalancer
   ports: 
-    - name: amps
-      port: {{ .Values.ui.http_port }}
-      targetPort: {{ .Values.ui.http_port }}
-    - name: amps-ssl
-      port: {{ .Values.ui.ssl.port }}
-      targetPort: {{ .Values.ui.ssl.port }}
 {{ toYaml .Values.ports| indent 4 }}
   selector:
     name: {{.Release.Name}}

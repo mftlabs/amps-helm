@@ -6,7 +6,7 @@ metadata:
     name: {{.Release.Name}}
     instance: {{.Release.Name}}-cluster
 spec:
-  replicas: {{.Values.replicas.backend}}
+  replicas: {{.Values.replicas}}
   serviceName: {{.Release.Name}}-svc-headless
   selector:
     matchLabels:
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: {{.Release.Name}}
-        image: mftlabs/amps_backend:latest
+        image: mftlabs/ampsv2:latest
         env:
         - name: AMPS_ADMIN_HOST
           value: {{ quote .Values.ui.admin_host}}
@@ -72,43 +72,33 @@ spec:
               name: amps-secret
               key: cookie
               optional: false
-        - name: AMPS_ARCHIVE_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: amps-minio
-              key: root-password
-              optional: true
-        - name: AMPS_DEFAULT_ARCHIVE
-          value: {{quote .Values.archiving.enabled}}
-        - name: AMPS_RELEASE_NAME
-          value: {{.Release.Name}}
         - name: SECRET_KEY_BASE
           valueFrom:
             secretKeyRef:
               name: amps-secret
               key: keybase
               optional: false
-      # {{ if .Values.ui.ssl.force }}
-      #   readinessProbe:
-      #     periodSeconds: 30
-      #     httpGet:
-      #       port: {{ .Values.ui.ssl.port}}
-      #       httpHeaders:
-      #       - name: Host
-      #         value:  {{ .Values.ui.admin_host}}
-      #       scheme: HTTPS
-      # {{ else }}
-      #   readinessProbe:
-      #     periodSeconds: 30
-      #     httpGet:
-      #       port: {{ .Values.ui.http_port}}
-      #       httpHeaders:
-      #       - name: Host
-      #         value:  {{ .Values.ui.admin_host}}
-      # {{ end }}
+      {{ if .Values.ui.ssl.force }}
+        readinessProbe:
+          periodSeconds: 30
+          httpGet:
+            port: {{ .Values.ui.ssl.port}}
+            httpHeaders:
+            - name: Host
+              value:  {{ .Values.ui.admin_host}}
+            scheme: HTTPS
+      {{ else }}
+        readinessProbe:
+          periodSeconds: 30
+          httpGet:
+            port: {{ .Values.ui.http_port}}
+            httpHeaders:
+            - name: Host
+              value:  {{ .Values.ui.admin_host}}
+      {{ end }}
         volumeMounts:
-        - name: {{.Release.Name}}-temp-pv
-          mountPath: /amps/data/tmp
+        # - name: {{.Release.Name}}-temp-pv-storage
+        #   mountPath: {{.Values.tempMount}}
         - name: {{.Release.Name}}-modules-pv
           mountPath: /amps/data/modules
         - name: {{.Release.Name}}-cfg-pv
@@ -136,9 +126,9 @@ spec:
         image: curlimages/curl:latest
         command: ['sh', '-c', "until nslookup {{.Release.Name}}-mongodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for {{.Release.Name}}-mongodb; sleep 2; done"]
       volumes:
-      - name: {{.Release.Name}}-temp-pv
-        persistentVolumeClaim:
-          claimName: {{.Release.Name}}-temp-pvc
+      # - name: {{.Release.Name}}-temp-pv-storage
+      #   persistentVolumeClaim:
+      #     claimName: {{.Release.Name}}-temp-pv-claim
       - name: {{.Release.Name}}-modules-pv
         persistentVolumeClaim:
           claimName: {{.Release.Name}}-modules-pvc
