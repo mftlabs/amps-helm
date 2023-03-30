@@ -17,6 +17,7 @@ spec:
       labels:
         name: {{.Release.Name}}-ui
         instance: {{.Release.Name}}-ui-node
+        date: "{{ now | unixEpoch }}"
     spec:
       containers:
       - name: {{.Release.Name}}-ui

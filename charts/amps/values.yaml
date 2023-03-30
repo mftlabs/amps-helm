@@ -66,6 +66,10 @@ temp:
   size: 20Gi
   # storageClassName:
 
+aws: 
+  enabled: false
+  efs_id: 
+
 openshift: false
 
 defaultStorageClass:

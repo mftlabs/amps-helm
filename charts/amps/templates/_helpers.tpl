@@ -61,6 +61,14 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{- define "helpers.getStorageClass"}}
+{{- if .Values.aws.enabled }}
+  storageClassName: {{ .Values.aws.efs_id }}-sc
+{{- else}}
+  storageClassName: {{ .Values.defaultStorageClass }}
+{{- end}}
+{{- end}}
+
 
 {{- define "helpers.list-env-variables"}}
 {{- range $key, $val := .Values.env.secret }}

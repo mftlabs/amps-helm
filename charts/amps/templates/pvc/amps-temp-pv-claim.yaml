@@ -3,11 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{.Release.Name}}-temp-pvc
 spec:
-  {{ if .Values.temp.storageClassName }}
-  storageClassName: {{ .Values.temp.storageClassName}}
-  {{ else if .Values.defaultStorageClass }}
-  storageClassName: {{ .Values.defaultStorageClass }}
-  {{ end }}
+  {{- template "helpers.getStorageClass" .}}
   accessModes:
     - ReadWriteMany
   resources:
