@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Release.Name}}-portal-lb
+  labels:
+    name: {{.Release.Name}}-portal-lb
+    instance: {{.Release.Name}}-portal-load-balancer
+spec:
+  type: LoadBalancer
+  ports: 
+    - name: amps
+      port: {{ .Values.ui.http_port }}
+      targetPort: {{ .Values.ui.http_port }}
+    - name: amps-ssl
+      port: {{ .Values.ui.ssl.port }}
+      targetPort: {{ .Values.ui.ssl.port }}
+  selector:
+    name: {{.Release.Name}}-portal
+    instance: {{.Release.Name}}-portal-node

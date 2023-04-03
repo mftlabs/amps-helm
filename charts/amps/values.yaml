@@ -77,6 +77,7 @@ defaultStorageClass:
 replicas:
   backend: 3
   ui: 2
+  portal: 2
 
 archiving:
   enabled: true
