@@ -47,6 +47,8 @@ spec:
           value: {{ quote .Values.ui.ssl.cert}}
         - name: AMPS_CERT_MODE
           value: {{ quote .Values.ui.ssl.certmode}}
+        - name: AMPS_PY_PACKAGES
+          value: {{ .Values.python.packages }}
         - name: RELEASE_NODE_IP
           valueFrom:
             fieldRef:

@@ -82,6 +82,9 @@ replicas:
 archiving:
   enabled: true
 
+python:
+  packages: ""
+
 
  
 existingSecret: 
