@@ -8,7 +8,11 @@ metadata:
 spec:
   type: LoadBalancer
   ports: 
-{{ toYaml .Values.ports| indent 4 }}
+    - name: ssl_verify
+      protocol: TCP
+      port: 80
+      targetPort: 80
+{{ toYaml .Values.ports | indent 4 }}
   selector:
     name: {{.Release.Name}}
     instance: {{.Release.Name}}-node
