@@ -8,10 +8,14 @@ metadata:
 spec:
   type: LoadBalancer
   ports: 
-    - name: ssl-verify
+    - name: ssl-verify-http
       protocol: TCP
       port: 80
       targetPort: 80
+    - name: ssl-verify-https
+      protocol: TCP
+      port: 443
+      targetPort: 443
 {{ toYaml .Values.ports | indent 4 }}
   selector:
     name: {{.Release.Name}}
