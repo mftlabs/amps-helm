@@ -34,6 +34,9 @@ ui:
     emails: "info@agiledatainc.com"
     certmode: local
 
+backend:
+  svc_host: svc.localhost
+
 ports: 
   - name: sftp
     protocol: TCP

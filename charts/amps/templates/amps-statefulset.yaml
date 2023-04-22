@@ -27,6 +27,8 @@ spec:
           value: {{ quote .Values.ui.admin_host}}
         - name: AMPS_HOST
           value: {{ quote .Values.ui.user_host}}
+        - name: AMPS_SVC_HOST
+          value: {{ quote .Values.backend.svc_host}}
         - name: AMPS_PORT
           value: {{ quote .Values.ui.http_port}}
         - name: AMPS_SSL_PORT
