@@ -8,7 +8,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports: 
-    - name: ssl_verify
+    - name: ssl-verify
       protocol: TCP
       port: 80
       targetPort: 80
