@@ -31,7 +31,7 @@ ui:
     cert: 
     gen_certs: false
     domains: 
-    emails: "info@agiledatainc.com"
+    emails: "amps@mftlabs.io"
     certmode: local
 
 backend:
