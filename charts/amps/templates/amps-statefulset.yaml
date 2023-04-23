@@ -44,9 +44,9 @@ spec:
         - name: AMPS_DNS_EMAILS
           value: {{ quote .Values.ui.ssl.emails}}
         - name: AMPS_SSL_KEY
-          value: /amps/certs/ssl.key
+          value: "/amps/certs/ssl.key"
         - name: AMPS_SSL_CERT
-          value: /amps/certs/ssl.cert
+          value: "/amps/certs/ssl.cert"
         - name: AMPS_CERT_MODE
           value: {{ quote .Values.ui.ssl.certmode}}
         - name: AMPS_PY_PACKAGES
