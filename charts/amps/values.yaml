@@ -27,12 +27,16 @@ ui:
     enabled: false
     force: false
     port: 443
-    key: 
-    cert: 
+    keyfile: 
+    certfile: 
     gen_certs: false
     domains: 
     emails: "amps@mftlabs.io"
     certmode: local
+
+ssl:
+  cert:
+  key:
 
 backend:
   svc_host: svc.localhost

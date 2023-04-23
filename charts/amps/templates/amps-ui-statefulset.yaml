@@ -44,9 +44,9 @@ spec:
         - name: AMPS_DNS_EMAILS
           value: {{ quote .Values.ui.ssl.emails}}
         - name: AMPS_SSL_KEY
-          value: {{ quote .Values.ui.ssl.key}}
+          value: /amps/certs/ssl.key
         - name: AMPS_SSL_CERT
-          value: {{ quote .Values.ui.ssl.cert}}
+          value: /amps/certs/ssl.cert
         - name: AMPS_CERT_MODE
           value: {{ quote .Values.ui.ssl.certmode}}
         - name: AMPS_PY_PACKAGES
@@ -112,6 +112,9 @@ spec:
           mountPath: /amps/data/cfg
         - name: {{.Release.Name}}-misc-pv
           mountPath: /amps/data/misc
+        - name: amps-ssl-secret-volume
+          mountPath: /amps/certs
+          readOnly: true
         ports:
           - name: epmd
             containerPort: 4369
@@ -145,6 +148,9 @@ spec:
       - name: {{.Release.Name}}-misc-pv
         persistentVolumeClaim:
           claimName: {{.Release.Name}}-misc-pvc
+      - name: amps-ssl-secret-volume
+        secret:
+          secretName: amps-ssl
       
       #  ports:
       #  - containerPort: 8080
