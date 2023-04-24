@@ -42,10 +42,6 @@ backend:
   svc_host: svc.localhost
 
 ports: 
-  - name: sftp
-    protocol: TCP
-    port: 15022
-    targetPort: 15022
   - name: api
     protocol: TCP
     port: 1234
