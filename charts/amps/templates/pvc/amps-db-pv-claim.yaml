@@ -4,7 +4,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{.Release.Name}}-db-pvc
 spec:
-  {{- template "helpers.getStorageClass" .}}
+  {{ if .Values.db.storageClassName }}
+  storageClassName: {{ .Values.db.storageClassName }}
+  {{ else if .Values.defaultStorageClass }}
+  storageClassName: {{ .Values.defaultStorageClass }}
+  {{ end }}
   accessModes:
     - ReadWriteOnce
   resources:
