@@ -108,6 +108,8 @@ spec:
           mountPath: /amps/data/tmp
         - name: {{.Release.Name}}-modules-pv
           mountPath: /amps/data/modules
+        - name: {{.Release.Name}}-packages-pv
+          mountPath: /.local/lib/python3.9/site-packages
         - name: {{.Release.Name}}-cfg-pv
           mountPath: /amps/data/cfg
         - name: {{.Release.Name}}-misc-pv
@@ -148,6 +150,9 @@ spec:
       - name: {{.Release.Name}}-misc-pv
         persistentVolumeClaim:
           claimName: {{.Release.Name}}-misc-pvc
+      - name: {{.Release.Name}}-packages-pv
+        persistentVolumeClaim:
+          claimName: {{.Release.Name}}-packages-pvc
       - name: amps-ssl-secret-volume
         secret:
           secretName: amps-ssl

@@ -51,6 +51,9 @@ modules:
   size: 1Gi
   # storageClassName:
 
+packages:
+  size: 5Gi
+
 cfg:
   size: 1Gi
   # storageClassName:
